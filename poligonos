@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const get_stdin_1 = __importDefault(require("get-stdin"));
+const Geometry_1 = require("./src/Geometry");
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        let currLine = 0;
+        const input = yield (0, get_stdin_1.default)();
+        const lines = input.trim().split('\n');
+        const totalPolyCount = parseInt(lines[0].split(' ')[0]);
+        const pointsToFindCount = parseInt(lines[0].split(' ')[1]);
+        currLine++;
+        let polygons = [];
+        // console.log(`polyCount: ${totalPolyCount}, pointCount: ${pointsToFindCount}`);
+        // Read n polygons
+        for (let polygonsI = 0; polygonsI < totalPolyCount; polygonsI++) {
+            // Read the points of this polygon
+            const polyPointsCount = parseInt(lines[currLine].trim());
+            currLine++;
+            // console.log(`Reading ${polyPointsCount} Points`);
+            let segments = [];
+            for (let polyPoints = 0; polyPoints < polyPointsCount - 1; polyPoints++) {
+                let localNextLine = currLine;
+                const point1 = parseInt(lines[localNextLine].split(' ')[0]);
+                const point2 = parseInt(lines[localNextLine].split(' ')[1]);
+                localNextLine++;
+                const point3 = parseInt(lines[localNextLine].split(' ')[0]);
+                const point4 = parseInt(lines[localNextLine].split(' ')[1]);
+                localNextLine++;
+                segments.push(new Geometry_1.Segment(new Geometry_1.Point(point1, point2), new Geometry_1.Point(point3, point4)));
+                // console.log(point1, point2, point3, point4);
+                currLine++;
+            }
+            currLine++;
+            // console.log(segments[segments.length - 1].finalP, segments[segments.length - (polyPointsCount - 1)].initP);
+            segments.push(new Geometry_1.Segment(segments[segments.length - 1].finalP, segments[segments.length - (polyPointsCount - 1)].initP));
+            // console.log("\n");
+            polygons.push(new Geometry_1.Polygon(segments));
+            console.log(`${polygonsI + 1} ${polygons[polygonsI].isSimple() ? 'simples' : 'nao simples'} e ${polygons[polygonsI].isConvex() ? 'convexo' : 'nao convexo'}`);
+        }
+        for (let i = 0; i < pointsToFindCount; i++) {
+            const x = parseInt(lines[currLine].split(' ')[0]);
+            const y = parseInt(lines[currLine].split(' ')[1]);
+            currLine++;
+            let out = `${i + 1}:`;
+            polygons.forEach((poly, l) => {
+                if (poly.containsPoint(new Geometry_1.Point(x, y))) {
+                    out += `${l + 1} `;
+                }
+            });
+            console.log(out);
+        }
+    });
+}
+main();

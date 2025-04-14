@@ -1,0 +1,29 @@
+{
+  "name": "comp-geo-poligonos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "purge": "rm -rf *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlmiranteFuchs/comp-geo-poligonos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AlmiranteFuchs/comp-geo-poligonos/issues"
+  },
+  "homepage": "https://github.com/AlmiranteFuchs/comp-geo-poligonos#readme",
+  "devDependencies": {
+    "@types/get-stdin": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "get-stdin": "^9.0.0"
+  }
+}
