@@ -24,6 +24,6 @@
     "typescript": "^5.8.2"
   },
   "dependencies": {
-    "get-stdin": "^9.0.0"
+    "get-stdin": "^8.0.0"
   }
 }
