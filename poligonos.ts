@@ -1,10 +1,11 @@
-import getStdin from "get-stdin";
 import { Point, Polygon, Segment } from './src/Geometry';
 
 async function main() {
+    const getStdin = await import('get-stdin');
+    const input = await getStdin.default();
+
     let currLine: number = 0;
 
-    const input = await getStdin();
     const lines = input.trim().split('\n');
 
     const totalPolyCount: number = parseInt(lines[0].split(' ')[0]);
